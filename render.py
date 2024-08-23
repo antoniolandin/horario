@@ -65,13 +65,3 @@ def pintar_clase(clase, draw):
         font=font_profesor,
         fill=(0, 0, 0)
     )
-
-
-if __name__ == "__main__":
-    from PIL import Image
-    from PIL import ImageDraw
-
-    horario = Image.open("horario_base.png")
-    draw = ImageDraw.Draw(horario)
-
-    pintar_clase(0, 0, "Redes", draw)
