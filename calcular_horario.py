@@ -8,6 +8,10 @@ from horario import Horario
 
 import random
 
+import time
+
+import math
+
 clases = [
     clases_INSOA,
     clases_INSOB,
@@ -119,25 +123,23 @@ if __name__ == '__main__':
 
         bloques_por_asignatura.append(bloques)
 
-    mapa_horario, clases_horario = generar_horario(bloques_por_asignatura)
-    best_puntuacion = puntuar_horario(mapa_horario)
-    print("Nueva mejor puntuacion: ", best_puntuacion)
-    best_horario = clases_horario
-
-    while best_puntuacion < 0:
+    while True:
         mapa_horario, clases_horario = generar_horario(bloques_por_asignatura)
-        puntuacion = puntuar_horario(mapa_horario)
+        best_puntuacion = puntuar_horario(mapa_horario)
+        best_horario = clases_horario
 
-        print("Puntuacion: ", puntuacion)
+        while best_puntuacion < -1:
+            mapa_horario, clases_horario = generar_horario(bloques_por_asignatura)
+            puntuacion = puntuar_horario(mapa_horario)
 
-        if puntuacion > best_puntuacion:
-            best_puntuacion = puntuacion
-            best_horario = clases_horario
+            if puntuacion > best_puntuacion:
+                best_puntuacion = puntuacion
+                best_horario = clases_horario
 
-            print("Nueva mejor puntuacion: ", best_puntuacion)
+            horario = Horario(best_horario)
 
-    horario = Horario(best_horario)
+        print("Guardado horario. Puntuacion: ", best_puntuacion)
 
-    # mostrara y guardar el mejor horario
-    horario.cargar_imagen()
-    horario.guardar()
+        # mostrara y guardar el mejor horario
+        horario.cargar_imagen()
+        horario.guardar()
