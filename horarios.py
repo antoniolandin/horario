@@ -10,7 +10,14 @@ from profesor import carlos_mora
 
 from clase import Clase
 
-horario_INSO1A = [
+
+class Horario:
+    def __init__(self, nombre, clases):
+        self.nombre = nombre
+        self.clases = clases
+
+
+clases_INSOA = [
     Clase(
         dia=0,
         hora=0,
@@ -83,7 +90,7 @@ horario_INSO1A = [
     ),
 ]
 
-horario_INSO1B = [
+clases_INSOB = [
     Clase(
         dia=0,
         hora=1,
@@ -156,7 +163,7 @@ horario_INSO1B = [
     )
 ]
 
-horario_INSO1C = [
+clases_INSO1C = [
     Clase(
         dia=0,
         hora=1,
@@ -229,7 +236,7 @@ horario_INSO1C = [
     )
 ]
 
-horario_INSO2A = [
+clases_INSO2A = [
     Clase(
         dia=0,
         hora=4,
@@ -302,7 +309,7 @@ horario_INSO2A = [
     )
 ]
 
-horario_INSO2B = [
+clases_INSO2B = [
     Clase(
         dia=0,
         hora=3,
@@ -375,7 +382,7 @@ horario_INSO2B = [
     )
 ]
 
-horario_INSO2C = [
+clases_INSO2C = [
     Clase(
         dia=0,
         hora=3,
@@ -448,7 +455,7 @@ horario_INSO2C = [
     )
 ]
 
-horario_INSO2D = [
+clases_INSO2D = [
     Clase(
         dia=1,
         hora=3,
@@ -464,3 +471,11 @@ horario_INSO2D = [
         grupo=6
         )
 ]
+
+horario_INSOA = Horario("INSOA", clases_INSOA)
+horario_INSOB = Horario("INSOB", clases_INSOB)
+horario_INSO1C = Horario("INSO1C", clases_INSO1C)
+horario_INSO2A = Horario("INSO2A", clases_INSO2A)
+horario_INSO2B = Horario("INSO2B", clases_INSO2B)
+horario_INSO2C = Horario("INSO2C", clases_INSO2C)
+horario_INSO2D = Horario("INSO2D", clases_INSO2D)
