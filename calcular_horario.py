@@ -95,6 +95,9 @@ def puntuar_horario(mapa_horario):
         num_clases = sum(dia)
         clase_actual = 0
 
+        # if num_clases > 3:
+        #     puntuacion -= 1
+        #
         for hora in dia:
 
             if hora:
@@ -123,22 +126,28 @@ if __name__ == '__main__':
 
         bloques_por_asignatura.append(bloques)
 
+    horarios_guardados = []
+
     while True:
         mapa_horario, clases_horario = generar_horario(bloques_por_asignatura)
         best_puntuacion = puntuar_horario(mapa_horario)
         best_horario = clases_horario
+        horario = Horario(best_horario)
 
         while best_puntuacion < -1:
             mapa_horario, clases_horario = generar_horario(bloques_por_asignatura)
             puntuacion = puntuar_horario(mapa_horario)
 
-            if puntuacion > best_puntuacion:
+            if puntuacion > best_puntuacion and mapa_horario not in horarios_guardados:
                 best_puntuacion = puntuacion
                 best_horario = clases_horario
 
             horario = Horario(best_horario)
 
         print("Guardado horario. Puntuacion: ", best_puntuacion)
+
+        # guardar horario
+        horarios_guardados.append(mapa_horario)
 
         # mostrara y guardar el mejor horario
         horario.cargar_imagen()
