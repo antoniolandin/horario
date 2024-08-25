@@ -6,11 +6,7 @@ from asignatura import estadistica, redes_ordenadores, proyectos_2, proyectos_1
 
 from horario import Horario
 
-import random
-
-import time
-
-import math
+import itertools
 
 clases = [
     clases_INSOA,
@@ -46,72 +42,8 @@ def bloque_clase(asignatura, grupo):
     return bloque
 
 
-def generar_horario(bloques_por_asignatura):
-    clases_horario = []
-    mapa_horario = []
-
-    for _ in range(5):
-        mapa_horario.append([False] * 6)
-
-    for asignatura in range(len(asignaturas_cuatrimestre)):
-        bloques = bloques_por_asignatura[asignatura].copy()
-
-        encontrado = False
-
-        while len(bloques) > 0 and not encontrado:
-            bloque = random.choice(bloques)
-
-            seleccionado = True
-
-            # comprobar que no se superponga con las clases ya añadidas
-            for clase in bloque:
-
-                # si es la primera clase añadida
-                if len(clases_horario) == 0:
-                    seleccionado = True
-
-                for clase_horario in clases_horario:
-                    # si no se superpone
-                    if clase.dia == clase_horario.dia and clase.hora == clase_horario.hora:
-                        seleccionado = False
-
-            # si no se ha encontrado un bloque que no se superponga
-            if seleccionado:
-                for clase in bloque:
-                    mapa_horario[clase.dia][clase.hora] = True
-                    clases_horario.append(clase)
-
-                encontrado = True
-            else:
-                bloques.remove(bloque)
-
-    return mapa_horario, clases_horario
-
-
-def puntuar_horario(mapa_horario):
-    puntuacion = 0
-
-    for dia in mapa_horario:
-        num_clases = sum(dia)
-        clase_actual = 0
-
-        # if num_clases > 3:
-        #     puntuacion -= 1
-        #
-        for hora in dia:
-
-            if hora:
-                clase_actual += 1
-            else:
-                if clase_actual > 0 and clase_actual < num_clases:
-                    puntuacion -= 1
-
-    return puntuacion
-
-
-if __name__ == '__main__':
-
-    bloques_por_asignatura = []
+def bloques_por_asignaturas(asignaturas):
+    bloques_asignatura = []
 
     for asignatura in asignaturas_cuatrimestre:
 
@@ -124,31 +56,79 @@ if __name__ == '__main__':
             if len(bloque) > 0:
                 bloques.append(bloque)
 
-        bloques_por_asignatura.append(bloques)
+        bloques_asignatura.append(bloques)
 
-    horarios_guardados = []
+    return bloques_asignatura
 
-    while True:
-        mapa_horario, clases_horario = generar_horario(bloques_por_asignatura)
-        best_puntuacion = puntuar_horario(mapa_horario)
-        best_horario = clases_horario
-        horario = Horario(best_horario)
 
-        while best_puntuacion < -1:
-            mapa_horario, clases_horario = generar_horario(bloques_por_asignatura)
-            puntuacion = puntuar_horario(mapa_horario)
+def generar_horarios(bloques_por_asignatura):
+    bloques_asignatura = bloques_por_asignatura(asignaturas_cuatrimestre)
+    horarios_bloques = list(itertools.product(*bloques_asignatura))
+    horarios = []
 
-            if puntuacion > best_puntuacion and mapa_horario not in horarios_guardados:
-                best_puntuacion = puntuacion
-                best_horario = clases_horario
+    # pasar los bloques a clases sueltas
+    for horario in horarios_bloques:
+        clases_horario = []
 
-            horario = Horario(best_horario)
+        for bloque in horario:
+            for clase in bloque:
+                clases_horario.append(clase)
 
-        print("Guardado horario. Puntuacion: ", best_puntuacion)
+        if horario_valido(clases_horario):
+            horarios.append(clases_horario)
 
-        # guardar horario
-        horarios_guardados.append(mapa_horario)
+    return horarios
 
-        # mostrara y guardar el mejor horario
-        horario.cargar_imagen()
-        horario.guardar()
+
+def generar_mapa_horario(horario):
+    mapa_horario = [[False for _ in range(6)] for _ in range(5)]
+
+    for clase in horario:
+        mapa_horario[clase.dia][clase.hora] = True
+
+    return mapa_horario
+
+
+def horario_valido(clases_horario):
+    for c1 in clases_horario:
+        for c2 in clases_horario:
+            if c1 != c2 and c1.dia == c2.dia and c1.hora == c2.hora:
+                return False
+
+    return True
+
+
+def filtrar_horario(mapa_horario, max_clases_dia=3, max_espacios=1):
+
+    espacios = 0
+
+    for dia in mapa_horario:
+        num_clases = sum(dia)
+        clase_actual = 0
+
+        if num_clases > max_clases_dia:
+            return False
+
+        for hora in dia:
+            if hora:
+                clase_actual += 1
+            else:
+                if clase_actual > 0 and clase_actual < num_clases:
+                    espacios += 1
+
+    if espacios > max_espacios:
+        return False
+
+    return True
+
+
+if __name__ == '__main__':
+    horarios = generar_horarios(bloques_por_asignaturas)
+
+    for horario in horarios:
+        mapa_horario = generar_mapa_horario(horario)
+
+        if filtrar_horario(mapa_horario):
+            horario_filtrado = Horario(horario)
+            horario_filtrado.cargar_imagen()
+            horario_filtrado.guardar()
