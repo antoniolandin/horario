@@ -23,7 +23,6 @@ def pintar_caja(dia, hora, draw):
 
 
 def pintar_clase(clase, draw):
-
     inicio_clase = 9 + clase.hora*2
     fin_clase = inicio_clase + 2
 
@@ -44,7 +43,7 @@ def pintar_clase(clase, draw):
 
     # pintar nombre del grupo
     font_grupo = ImageFont.truetype("arial.ttf", 35)
-    nombre_grupo = clase.get_nombre_grupo()
+    nombre_grupo = clase.grupo
     _, _, w, h = draw.textbbox((0, 0), nombre_grupo, font=font_grupo)
 
     draw.text(
@@ -56,7 +55,7 @@ def pintar_clase(clase, draw):
 
     # pintar nombre de la clase
     font_clase = ImageFont.truetype("arial.ttf", 60)
-    _, _, w, h = draw.textbbox((0, 0), clase.asignatura.alias, font=font_clase)
+    _, _, w, h = draw.textbbox((0, 0), clase.asignatura.nombre, font=font_clase)
     draw.text(
         (x+(ancho-w)/2, y+(alto-h)/2+15),
         clase.asignatura.alias,
@@ -75,7 +74,7 @@ def pintar_clase(clase, draw):
     )
 
 
-def guardar_horario(clases):
+def get_img_horario(clases):
     img = img_base.copy()
 
     draw = ImageDraw.Draw(img)
@@ -86,8 +85,4 @@ def guardar_horario(clases):
             draw
         )
 
-    random_name = ''.join(
-        random.choices(string.ascii_uppercase + string.digits, k=10)
-    )
-
-    img.save(f"horarios/{random_name}.png")
+    return img
