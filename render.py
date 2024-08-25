@@ -1,5 +1,13 @@
 from PIL import ImageFont
 
+from PIL import Image
+from PIL import ImageDraw
+
+import random
+import string
+
+img_base = Image.open("horario_base.png")
+
 ancho = 602
 alto = 272
 
@@ -65,3 +73,21 @@ def pintar_clase(clase, draw):
         font=font_profesor,
         fill=(0, 0, 0)
     )
+
+
+def guardar_horario(clases):
+    img = img_base.copy()
+
+    draw = ImageDraw.Draw(img)
+
+    for clase in clases:
+        pintar_clase(
+            clase,
+            draw
+        )
+
+    random_name = ''.join(
+        random.choices(string.ascii_uppercase + string.digits, k=10)
+    )
+
+    img.save(f"horarios/{random_name}.png")
