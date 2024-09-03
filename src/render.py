@@ -2,6 +2,7 @@ from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
 
+import os
 import random
 
 base_img = Image.open("assets/horario_base.png")
@@ -87,5 +88,8 @@ def save_schedule_img(lectures):
 
     random_string = ''.join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
                                            k=10))
+    # check if the out folder exists
+    if not os.path.exists("out"):
+        os.makedirs("out")
 
     img.save(f"out/{random_string}.png")
