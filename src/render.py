@@ -1,81 +1,91 @@
 from PIL import ImageFont
-
 from PIL import Image
 from PIL import ImageDraw
 
-img_base = Image.open("assets/horario_base.png")
+import random
 
-ancho = 602
-alto = 272
+base_img = Image.open("assets/horario_base.png")
+
+box_width = 602
+box_height = 272
 
 x0 = 267
 y0 = 420
 
 
-def pintar_caja(dia, hora, draw):
-    x = x0 + (ancho * dia + 6 * dia)
-    y = y0 + (alto * hora + 3 * hora)
+def draw_box(day, hour, draw):
+    x = x0 + (box_width * day + 6 * day)
+    y = y0 + (box_height * hour + 3 * hour)
 
-    draw.rectangle([x, y, x + ancho, y + alto],
+    draw.rectangle([x, y, x + box_width, y + box_height],
                    fill="#cacaca",
                    outline=(0, 0, 0))
 
 
-def pintar_clase(clase, draw):
-    inicio_clase = 9 + clase.hora * 2
-    fin_clase = inicio_clase + 2
+def draw_lecture(lecture, draw):
+    lecture_start = 9 + lecture.hour * 2
+    lecture_end = lecture_start + 2
 
-    # ponemos el inicio en formato string
-    inicio_clase = str(inicio_clase) + ":00"
-    fin_clase = str(fin_clase) + ":00"
+    # we put the start and end time in the format HH:MM 
+    lecture_start = str(lecture_start) + ":00"
+    lecture_end = str(lecture_end) + ":00"
 
-    x = x0 + (ancho * clase.dia + 6 * clase.dia)
-    y = y0 + (alto * clase.hora + 3 * clase.hora)
+    x = x0 + (box_width * lecture.day + 6 * lecture.day)
+    y = y0 + (box_height * lecture.hour + 3 * lecture.hour)
 
-    # pintar caja
-    pintar_caja(clase.dia, clase.hora, draw)
+    # draw box
+    draw_box(lecture.day, lecture.hour, draw)
 
-    # pintar hora de inicio y fin
-    font_hora = ImageFont.truetype("arial.ttf", 35)
-    draw.text((x + 10, y + 10), inicio_clase, font=font_hora, fill=(0, 0, 0))
-    draw.text((x + ancho - 100, y + alto - 50),
-              fin_clase,
-              font=font_hora,
+    # draw start and end time
+    hour_font = ImageFont.truetype("arial.ttf", 35)
+    draw.text((x + 10, y + 10), lecture_start, font=hour_font, fill=(0, 0, 0))
+    draw.text((x + box_width - 100, y + box_height - 50),
+              lecture_end,
+              font=hour_font,
               fill=(0, 0, 0))
 
-    # pintar nombre del grupo
-    font_grupo = ImageFont.truetype("arial.ttf", 35)
-    nombre_grupo = clase.grupo
-    _, _, w, h = draw.textbbox((0, 0), nombre_grupo, font=font_grupo)
+    # draw group name
+    group_font = ImageFont.truetype("arial.ttf", 35)
+    group_name = lecture.group
+    _, _, w, h = draw.textbbox((0, 0), group_name, font=group_font)
 
-    draw.text((x + (ancho - w) / 2, y + (alto - h) / 2 - 30),
-              nombre_grupo,
-              font=font_grupo,
+    draw.text((x + (box_width - w) / 2, y + (box_height - h) / 2 - 30),
+              group_name,
+              font=group_font,
               fill=(0, 0, 0))
 
-    # pintar nombre de la clase
-    font_clase = ImageFont.truetype("arial.ttf", 60)
-    _, _, w, h = draw.textbbox((0, 0), clase.asignatura, font=font_clase)
-    draw.text((x + (ancho - w) / 2, y + (alto - h) / 2 + 15),
-              clase.asignatura,
-              font=font_clase,
+    # draw subject name
+    lecture_font = ImageFont.truetype("arial.ttf", 60)
+    _, _, w, h = draw.textbbox((0, 0), lecture.subject, font=lecture_font)
+    draw.text((x + (box_width - w) / 2, y + (box_height - h) / 2 + 15),
+              lecture.subject,
+              font=lecture_font,
               fill=(0, 0, 0))
 
-    # pintar nombre del profesor
-    font_profesor = ImageFont.truetype("arial.ttf", 25)
-    _, _, w, h = draw.textbbox((0, 0), clase.profesor, font=font_profesor)
-    draw.text((x + (ancho - w) / 2, y + (alto - h) / 2 + 60),
-              clase.profesor,
-              font=font_profesor,
+    # draw teacher name
+    teacher_font = ImageFont.truetype("arial.ttf", 25)
+    _, _, w, h = draw.textbbox((0, 0), lecture.teacher, font=teacher_font)
+    draw.text((x + (box_width - w) / 2, y + (box_height - h) / 2 + 60),
+              lecture.teacher,
+              font=teacher_font,
               fill=(0, 0, 0))
 
 
-def get_img_horario(clases):
-    img = img_base.copy()
+def get_schedule_img(lectures):
+    img = base_img.copy()
 
     draw = ImageDraw.Draw(img)
 
-    for clase in clases:
-        pintar_clase(clase, draw)
+    for lecture in lectures:
+        draw_lecture(lecture, draw)
 
     return img
+
+
+def save_schedule_img(lectures):
+    img = get_schedule_img(lectures)
+
+    random_string = ''.join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+                                           k=10))
+
+    img.save(f"out/{random_string}.png")

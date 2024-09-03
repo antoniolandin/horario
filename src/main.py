@@ -1,76 +1,86 @@
 import itertools
-from render import guardar_horario
+
+from lecture import Lecture
+from read import read
+from render import save_schedule_img
 
 
-def bloque_clase(clases, asignatura, grupo):
+# dividir las clases de un grupo en bloques de clases por asignatura
+def subject_block(lectures: list[Lecture], subject: str):
 
-    bloque = []
+    block = []
 
-    for clase in clases:
-        for c in clase:
-            if c.asignatura == asignatura and c.grupo == grupo:
-                bloque.append(c)
+    for lecture in lectures:
+        if lecture.subject == subject:
+            block.append(lecture)
 
-    return bloque
-
-
-def bloques_por_asignaturas(asignaturas_cuatrimestre, clases, asignaturas):
-    bloques_asignatura = []
-
-    for asignatura in asignaturas_cuatrimestre:
-
-        bloques = []
-
-        for grupo in range(len(clases)):
-            bloque = bloque_clase(asignatura, grupo)
-
-            # como hay grupos que no tienen asignaturas no se añaden
-            if len(bloque) > 0:
-                bloques.append(bloque)
-
-        bloques_asignatura.append(bloques)
-
-    return bloques_asignatura
+    return block
 
 
-def generar_horarios(bloques_por_asignatura, asignaturas_cuatrimestre):
-    bloques_asignatura = bloques_por_asignatura(asignaturas_cuatrimestre)
-    horarios_bloques = list(itertools.product(*bloques_asignatura))
-    horarios = []
+# devuelve una lista de blocks de clases por asignatura
+def subject_lecture_blocks(my_subjects, group_lectures):
+    subject_lecture_block = []
+
+    for subject in my_subjects:
+        blocks = []
+
+        for lectures in group_lectures.values():
+            block = subject_block(lectures, subject)
+
+            # como hay grupos que no tienen subjects no se añaden
+            if len(block) > 0:
+                blocks.append(block)
+
+        if len(blocks) > 0:
+            subject_lecture_block.append(blocks)
+        else:
+            print(f"No se ha encontrado la asignatura {subject}")
+
+    return subject_lecture_block
+
+
+# generar todos los horarios posibles válidos
+def generate_schedules(subject_lecture_blocks):
+
+    # generar todos los horarios posibles
+    unvalidated_shedules = list(itertools.product(*subject_lecture_blocks))
+
+    # lista de horarios validos
+    schedules = []
 
     # pasar los bloques a clases sueltas
-    for horario in horarios_bloques:
-        clases_horario = []
+    for schedule in unvalidated_shedules:
+        schedule_lectures = []
 
-        for bloque in horario:
-            for clase in bloque:
-                clases_horario.append(clase)
+        for block in schedule:
+            for lecture in block:
+                schedule_lectures.append(lecture)
 
-        if horario_valido(clases_horario):
-            horarios.append(clases_horario)
+        if valid_schedule(schedule_lectures):
+            schedules.append(schedule_lectures)
 
-    return horarios
-
-
-def generar_mapa_horario(horario):
-    mapa_horario = [[False for _ in range(6)] for _ in range(5)]
-
-    for clase in horario:
-        mapa_horario[clase.dia][clase.hora] = True
-
-    return mapa_horario
+    return schedules
 
 
-def horario_valido(clases_horario):
-    for c1 in clases_horario:
-        for c2 in clases_horario:
-            if c1 != c2 and c1.dia == c2.dia and c1.hora == c2.hora:
+def valid_schedule(lectures):
+    for l1 in lectures:
+        for l2 in lectures:
+            if l1 != l2 and l1.day == l2.day and l1.hour == l2.hour:
                 return False
 
     return True
 
 
-def filtrar_horario(mapa_horario, max_clases_dia=3, max_espacios=1):
+def schedule_to_map(schedule):
+    schedule_map = [[False for _ in range(6)] for _ in range(5)]
+
+    for lecture in schedule:
+        schedule_map[lecture.day][lecture.hour] = True
+
+    return schedule_map
+
+
+def filter_schedule(mapa_horario, max_clases_dia=3, max_espacios=1):
 
     espacios = 0
 
@@ -95,10 +105,28 @@ def filtrar_horario(mapa_horario, max_clases_dia=3, max_espacios=1):
 
 
 if __name__ == '__main__':
-    horarios = generar_horarios(bloques_por_asignaturas)
+    # asignaturas que quiero cursar
+    my_subjects = [
+        "Fund. Des. Web", "Lab. Red. Sist. Op", "Pensa. Creativo",
+        "Proyectos 1", "Fund. Comp. Vis", "Prob. Estadist",
+        "Redes Ordenadores", "Proyectos 2"
+    ]
 
-    for horario in horarios:
-        mapa_horario = generar_mapa_horario(horario)
+    # leer las clases de los grupos
+    group_lectures = read("data/lectures.json")
 
-        if filtrar_horario(mapa_horario, max_clases_dia=4):
-            guardar_horario(horario)
+    # dividir las clases de un grupo en bloques de clases por asignatura
+    subject_lecture_blocks = subject_lecture_blocks(my_subjects,
+                                                    group_lectures)
+
+    # comprobar que se han encontrado todas las asignaturas
+    assert len(my_subjects) == len(
+        subject_lecture_blocks), "No se han encontrado todas las asignaturas"
+
+    # generar todos los horarios posibles válidos
+    schedules = generate_schedules(subject_lecture_blocks)
+
+    # filtrar horarios
+    for schedule in schedules:
+        if filter_schedule(schedule_to_map(schedule), max_clases_dia=4):
+            save_schedule_img(schedule)
