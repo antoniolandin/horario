@@ -5,7 +5,7 @@ from read import read
 from render import save_schedule_img
 
 
-# dividir las clases de un grupo en bloques de clases por asignatura
+# divide the lectures of a group into blocks of lectures by subject
 def subject_block(lectures: list[Lecture], subject: str):
 
     block = []
@@ -17,7 +17,7 @@ def subject_block(lectures: list[Lecture], subject: str):
     return block
 
 
-# devuelve una lista de blocks de clases por asignatura
+# get the blocks of lectures by subject for all the groups
 def subject_lecture_blocks(my_subjects, group_lectures):
     subject_lecture_block = []
 
@@ -27,35 +27,38 @@ def subject_lecture_blocks(my_subjects, group_lectures):
         for lectures in group_lectures.values():
             block = subject_block(lectures, subject)
 
-            # como hay grupos que no tienen subjects no se añaden
+            # some groups don't have the subject
             if len(block) > 0:
                 blocks.append(block)
 
+        # if the subject has a wrong name or doesn't exist
         if len(blocks) > 0:
             subject_lecture_block.append(blocks)
         else:
-            print(f"No se ha encontrado la asignatura {subject}")
+            raise Exception(
+                f"The subject {subject} doesn't exist or is not written well.")
 
     return subject_lecture_block
 
 
-# generar todos los horarios posibles válidos
+# generate all the posible valid schedules
 def generate_schedules(subject_lecture_blocks):
 
-    # generar todos los horarios posibles
+    # generate all the possible schedules
     unvalidated_shedules = list(itertools.product(*subject_lecture_blocks))
 
-    # lista de horarios validos
+    # list to store the valid schedules
     schedules = []
 
-    # pasar los bloques a clases sueltas
     for schedule in unvalidated_shedules:
         schedule_lectures = []
 
+        # flatten the schedule
         for block in schedule:
             for lecture in block:
                 schedule_lectures.append(lecture)
 
+        # save if the schedule is valid
         if valid_schedule(schedule_lectures):
             schedules.append(schedule_lectures)
 
@@ -80,53 +83,53 @@ def schedule_to_map(schedule):
     return schedule_map
 
 
-def filter_schedule(mapa_horario, max_clases_dia=3, max_espacios=1):
+def filter_schedule(lecture_map, max_lectures_day=3, max_spaces=1):
 
-    espacios = 0
+    spaces = 0
 
-    for dia in mapa_horario:
-        num_clases = sum(dia)
-        clase_actual = 0
+    for day in lecture_map:
+        num_lectures = sum(day)
+        current_lecture = 0
 
-        if num_clases > max_clases_dia:
+        if num_lectures > max_lectures_day:
             return False
 
-        for hora in dia:
-            if hora:
-                clase_actual += 1
+        for hour in day:
+            if hour:
+                current_lecture += 1
             else:
-                if clase_actual > 0 and clase_actual < num_clases:
-                    espacios += 1
+                if current_lecture > 0 and current_lecture < num_lectures:
+                    spaces += 1
 
-    if espacios > max_espacios:
+    if spaces > max_spaces:
         return False
 
     return True
 
 
 if __name__ == '__main__':
-    # asignaturas que quiero cursar
+    # subjects that I want to study
     my_subjects = [
         "Fund. Des. Web", "Lab. Red. Sist. Op", "Pensa. Creativo",
         "Proyectos 1", "Fund. Comp. Vis", "Prob. Estadist",
         "Redes Ordenadores", "Proyectos 2"
     ]
 
-    # leer las clases de los grupos
+    # read the lectures of the groups
     group_lectures = read("data/lectures.json")
 
-    # dividir las clases de un grupo en bloques de clases por asignatura
+    # divide the lectures into blocks by subject
     subject_lecture_blocks = subject_lecture_blocks(my_subjects,
                                                     group_lectures)
 
-    # comprobar que se han encontrado todas las asignaturas
+    # check if all the subjects have been found
     assert len(my_subjects) == len(
-        subject_lecture_blocks), "No se han encontrado todas las asignaturas"
+        subject_lecture_blocks), "Some subjects were not found."
 
-    # generar todos los horarios posibles válidos
+    # generate the schedules
     schedules = generate_schedules(subject_lecture_blocks)
 
-    # filtrar horarios
+    # filter the schedules
     for schedule in schedules:
-        if filter_schedule(schedule_to_map(schedule), max_clases_dia=4):
+        if filter_schedule(schedule_to_map(schedule), max_lectures_day=4):
             save_schedule_img(schedule)
