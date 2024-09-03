@@ -5,7 +5,7 @@ from PIL import ImageDraw
 import os
 import random
 
-base_img = Image.open("assets/horario_base.png")
+base_img = Image.open("assets/base.png")
 
 box_width = 602
 box_height = 272
