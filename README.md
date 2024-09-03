@@ -1,5 +1,5 @@
-# Horario
+# Schedule 
 
-Aplicación para calcular el mejor horario posible
+Generate a schedule given a list of groups and their respective schedules.
 
-![Horario de ejemplo](./assets/ejemplo.png)
+![Example schedule](./assets/ejemplo.png)
