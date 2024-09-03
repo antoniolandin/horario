@@ -3,10 +3,7 @@ from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
 
-import random
-import string
-
-img_base = Image.open("horario_base.png")
+img_base = Image.open("assets/horario_base.png")
 
 ancho = 602
 alto = 272
@@ -55,20 +52,20 @@ def pintar_clase(clase, draw):
 
     # pintar nombre de la clase
     font_clase = ImageFont.truetype("arial.ttf", 60)
-    _, _, w, h = draw.textbbox((0, 0), clase.asignatura.nombre, font=font_clase)
+    _, _, w, h = draw.textbbox((0, 0), clase.asignatura, font=font_clase)
     draw.text(
         (x+(ancho-w)/2, y+(alto-h)/2+15),
-        clase.asignatura.alias,
+        clase.asignatura,
         font=font_clase,
         fill=(0, 0, 0)
     )
 
     # pintar nombre del profesor
     font_profesor = ImageFont.truetype("arial.ttf", 25)
-    _, _, w, h = draw.textbbox((0, 0), clase.profesor.nombre, font=font_profesor)
+    _, _, w, h = draw.textbbox((0, 0), clase.profesor, font=font_profesor)
     draw.text(
         (x+(ancho-w)/2, y+(alto-h)/2+60),
-        clase.profesor.nombre,
+        clase.profesor,
         font=font_profesor,
         fill=(0, 0, 0)
     )
