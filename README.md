@@ -2,4 +2,4 @@
 
 Aplicación para calcular el mejor horario posible
 
-![Horario de ejemplo](./ejemplo.png)
+![Horario de ejemplo](./assets/ejemplo.png)

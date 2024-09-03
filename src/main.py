@@ -1,36 +1,8 @@
-from clase import clases_INSOA, clases_INSOB, clases_INSO1C, clases_INSO2A
-from clase import clases_INSO2B, clases_INSO2C, clases_INSO2D
-
-from asignatura import web, lab_redes, pensamiento_creativo, composicion_visual
-from asignatura import estadistica, redes_ordenadores, proyectos_2, proyectos_1
-
+import itertools
 from render import guardar_horario
 
-import itertools
 
-clases = [
-    clases_INSOA,
-    clases_INSOB,
-    clases_INSO1C,
-    clases_INSO2A,
-    clases_INSO2B,
-    clases_INSO2C,
-    clases_INSO2D
-]
-
-asignaturas_cuatrimestre = [
-    web,
-    lab_redes,
-    pensamiento_creativo,
-    composicion_visual,
-    estadistica,
-    redes_ordenadores,
-    proyectos_1,
-    proyectos_2
-]
-
-
-def bloque_clase(asignatura, grupo):
+def bloque_clase(clases, asignatura, grupo):
 
     bloque = []
 
@@ -42,7 +14,7 @@ def bloque_clase(asignatura, grupo):
     return bloque
 
 
-def bloques_por_asignaturas(asignaturas):
+def bloques_por_asignaturas(asignaturas_cuatrimestre, clases, asignaturas):
     bloques_asignatura = []
 
     for asignatura in asignaturas_cuatrimestre:
@@ -61,7 +33,7 @@ def bloques_por_asignaturas(asignaturas):
     return bloques_asignatura
 
 
-def generar_horarios(bloques_por_asignatura):
+def generar_horarios(bloques_por_asignatura, asignaturas_cuatrimestre):
     bloques_asignatura = bloques_por_asignatura(asignaturas_cuatrimestre)
     horarios_bloques = list(itertools.product(*bloques_asignatura))
     horarios = []
