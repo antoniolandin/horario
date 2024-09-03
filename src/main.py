@@ -116,7 +116,7 @@ if __name__ == '__main__':
     ]
 
     # read the lectures of the groups
-    group_lectures = read("data/lectures.json")
+    group_lectures = read("data.json")
 
     # divide the lectures into blocks by subject
     subject_lecture_blocks = subject_lecture_blocks(my_subjects,
