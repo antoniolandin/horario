@@ -1,7 +1,7 @@
 import itertools
 
-from lecture import Lecture
-from read import read
+from src.lecture import Lecture
+from src.read import read
 from render import save_schedule_img
 
 
@@ -65,6 +65,7 @@ def generate_schedules(subject_lecture_blocks):
     return schedules
 
 
+# check if the schedule doesn't have two lectures at the same time
 def valid_schedule(lectures):
     for l1 in lectures:
         for l2 in lectures:
@@ -74,6 +75,7 @@ def valid_schedule(lectures):
     return True
 
 
+# transform a schedule into a map (matrix of booleans)
 def schedule_to_map(schedule):
     schedule_map = [[False for _ in range(6)] for _ in range(5)]
 
@@ -83,6 +85,7 @@ def schedule_to_map(schedule):
     return schedule_map
 
 
+# filter the schedules by the desired conditions
 def filter_schedule(lecture_map, max_lectures_day=3, max_spaces=1):
 
     spaces = 0
@@ -115,6 +118,12 @@ if __name__ == '__main__':
         "Redes Ordenadores", "Proyectos 2"
     ]
 
+    # max number of lectures per day
+    MAX_LECTURES_DAY = 4
+
+    # max number of waiting spaces in a schedule
+    MAX_WAITING_SPACES = 1
+
     # read the lectures of the groups
     group_lectures = read("data.json")
 
@@ -131,5 +140,9 @@ if __name__ == '__main__':
 
     # filter the schedules
     for schedule in schedules:
-        if filter_schedule(schedule_to_map(schedule), max_lectures_day=4):
+        # convert the schedule into a map (speed up calculations)
+        schedule_map = schedule_to_map(schedule)
+
+        if filter_schedule(schedule_map, MAX_LECTURES_DAY, MAX_WAITING_SPACES):
+            # save the schedule in the out/ folder
             save_schedule_img(schedule)
