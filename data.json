@@ -7,8 +7,8 @@
             "day": 0
         },
         {
-            "subject": "Fund. Des. Web",
-            "teacher": "Ramona Ruiz",
+            "subject": "Intro. Program. 1",
+            "teacher": "Sergio Bermúdez",
             "hour": 1,
             "day": 0
         },
@@ -31,7 +31,7 @@
             "day": 2
         },
         {
-            "subject": "Log. Mat. Discre.",
+            "subject": "Log. Mat. Discre",
             "teacher": "Ana Isabel Sánchez",
             "hour": 1,
             "day": 2
@@ -43,14 +43,14 @@
             "day": 3
         },
         {
-            "subject": "Log. Mat. Discre.",
+            "subject": "Log. Mat. Discre",
             "teacher": "Ana Isabel Sánchez",
             "hour": 1,
             "day": 3
         },
         {
-            "subject": "Intro. Program. 1",
-            "teacher": "Sergio Bermúdez",
+            "subject": "Fund. Des. Web",
+            "teacher": "Ramona Ruiz",
             "hour": 1,
             "day": 4
         },
@@ -69,21 +69,21 @@
             "day": 0
         },
         {
-            "subject": "Lab. Red. Sist. Op",
-            "teacher": "Héctor Paredes",
+            "subject": "Fund. Des. Web",
+            "teacher": "Ramona Ruiz",
             "hour": 1,
             "day": 0
         },
         {
             "subject": "Intro. Program. 1",
             "teacher": "Alfonso Castro",
-            "hour": 1,
+            "hour": 0,
             "day": 1
         },
         {
-            "subject": "Fund. Des. Web",
-            "teacher": "Ramona Ruiz",
-            "hour": 2,
+            "subject": "Lab. Red. Sist. Op",
+            "teacher": "Héctor Paredes",
+            "hour": 1,
             "day": 1
         },
         {
@@ -93,7 +93,7 @@
             "day": 2
         },
         {
-            "subject": "Log. Mat. Discre.",
+            "subject": "Log. Mat. Discre",
             "teacher": "Jorge Tesch",
             "hour": 1,
             "day": 2
@@ -117,7 +117,7 @@
             "day": 4
         },
         {
-            "subject": "Log. Mat. Discre.",
+            "subject": "Log. Mat. Discre",
             "teacher": "Jorge Tesch",
             "hour": 1,
             "day": 4
@@ -149,7 +149,7 @@
             "day": 1
         },
         {
-            "subject": "Log. Mat. Discre.",
+            "subject": "Log. Mat. Discre",
             "teacher": "Jorge Tesch",
             "hour": 0,
             "day": 2
@@ -173,7 +173,7 @@
             "day": 3
         },
         {
-            "subject": "Log. Mat. Discre.",
+            "subject": "Log. Mat. Discre",
             "teacher": "Jorge Tesch",
             "hour": 0,
             "day": 4
@@ -193,14 +193,14 @@
             "day": 0
         },
         {
-            "subject": "Prog. Ori. Objetos",
-            "teacher": "Miguel A. Mesas",
+            "subject": "Redes Ordenadores",
+            "teacher": "Constantino Malagón",
             "hour": 5,
             "day": 0
         },
         {
             "subject": "Prob. Estadist",
-            "teacher": "Carlos Górdon",
+            "teacher": "Carlos Gordón",
             "hour": 4,
             "day": 1
         },
@@ -213,36 +213,36 @@
         {
             "subject": "Redes Ordenadores",
             "teacher": "Constantino Malagón",
-            "hour": 4,
+            "hour": 3,
             "day": 2
         },
         {
             "subject": "Prog. Ori. Objetos",
             "teacher": "Miguel A. Mesas",
-            "hour": 5,
+            "hour": 4,
             "day": 2
+        },
+        {
+            "subject": "Prob. Estadist",
+            "teacher": "Carlos Gordón",
+            "hour": 4,
+            "day": 3
+        },
+        {
+            "subject": "Prog. Ori. Objetos",
+            "teacher": "Miguel A. Mesas",
+            "hour": 5,
+            "day": 3
         },
         {
             "subject": "Proyectos 2",
             "teacher": "Ana Isabel Sánchez",
             "hour": 3,
-            "day": 3
-        },
-        {
-            "subject": "Prob. Estadist",
-            "teacher": "Carlos Górdon",
-            "hour": 4,
-            "day": 3
+            "day": 4
         },
         {
             "subject": "Fund. Comp. Vis",
             "teacher": "Rubén de la Prida",
-            "hour": 3,
-            "day": 4
-        },
-        {
-            "subject": "Redes Ordenadores",
-            "teacher": "Constantino Malagón",
             "hour": 4,
             "day": 4
         }
@@ -261,14 +261,14 @@
             "day": 0
         },
         {
+            "subject": "Prog. Ori. Objetos",
+            "teacher": "Fco. Javier Fernández",
+            "hour": 3,
+            "day": 1
+        },
+        {
             "subject": "Sist. Operativos",
             "teacher": "Carlos Vallez",
-            "hour": 3,
-            "day": 1
-        },
-        {
-            "subject": "Prog. Ori. Objetos",
-            "teacher": "Fco. Javier Fernández",
             "hour": 4,
             "day": 1
         },
@@ -277,34 +277,34 @@
             "teacher": "Carlos Mora",
             "hour": 3,
             "day": 2
-        },
-        {
-            "subject": "Prog. Ori. Objetos",
-            "teacher": "Fco. Javier Fernández",
-            "hour": 4,
-            "day": 2
-        },
-        {
-            "subject": "Prob. Estadist",
-            "teacher": "Carlos Mora",
-            "hour": 3,
-            "day": 3
-        },
-        {
-            "subject": "Proyectos 2",
-            "teacher": "Ana Isabel Sánchez",
-            "hour": 4,
-            "day": 3
         },
         {
             "subject": "Redes Ordenadores",
             "teacher": "Constantino Malagón",
+            "hour": 4,
+            "day": 2
+        },
+        {
+            "subject": "Prob. Estadist",
+            "teacher": "Carlos Mora",
             "hour": 3,
-            "day": 4
+            "day": 3
+        },
+        {
+            "subject": "Prog. Ori. Objetos",
+            "teacher": "Fco. Javier Fernández",
+            "hour": 4,
+            "day": 3
         },
         {
             "subject": "Fund. Comp. Vis",
             "teacher": "Rubén de la Prida",
+            "hour": 3,
+            "day": 4
+        },
+        {
+            "subject": "Proyectos 2",
+            "teacher": "Ana Isabel Sánchez",
             "hour": 4,
             "day": 4
         }
@@ -335,22 +335,16 @@
             "day": 1
         },
         {
-            "subject": "Redes Ordenadores",
-            "teacher": "Constantino Malagón",
-            "hour": 3,
-            "day": 2
-        },
-        {
             "subject": "Prob. Estadist",
             "teacher": "Carlos Mora",
             "hour": 4,
             "day": 2
         },
         {
-            "subject": "Prog. 2D",
-            "teacher": "David Aragonés",
-            "hour": 3,
-            "day": 3
+            "subject": "Redes Ordenadores",
+            "teacher": "Constantino Malagón",
+            "hour": 5,
+            "day": 2
         },
         {
             "subject": "Prog. Ori. Objetos",
@@ -359,16 +353,10 @@
             "day": 3
         },
         {
-            "subject": "Proyectos 2",
-            "teacher": "Ana Isabel Sánchez",
+            "subject": "Fund. Comp. Vis",
+            "teacher": "Rubén de la Prida",
             "hour": 5,
             "day": 3
-        },
-        {
-            "subject": "Prog. 2D",
-            "teacher": "David Aragonés",
-            "hour": 3,
-            "day": 4
         },
         {
             "subject": "Sist. Operativos",
@@ -377,8 +365,8 @@
             "day": 4
         },
         {
-            "subject": "Fund. Comp. Vis",
-            "teacher": "Rubén de la Prida",
+            "subject": "Proyectos 2",
+            "teacher": "Ana Isabel Sánchez",
             "hour": 5,
             "day": 4
         }
@@ -386,13 +374,13 @@
     "INSO2D": [
         {
             "subject": "Prob. Estadist",
-            "teacher": "Carlos Górdon",
-            "hour": 3,
+            "teacher": "Carlos Gordón",
+            "hour": 5,
             "day": 1
         },
         {
             "subject": "Prob. Estadist",
-            "teacher": "Carlos Górdon",
+            "teacher": "Carlos Gordón",
             "hour": 3,
             "day": 3
         }
