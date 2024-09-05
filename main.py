@@ -2,7 +2,8 @@ import itertools
 
 from src.lecture import Lecture
 from src.read import read
-from render import save_schedule_img
+from src.render import save_schedule_img
+from src.render import get_schedule_img
 
 
 # divide the lectures of a group into blocks of lectures by subject
@@ -122,7 +123,7 @@ if __name__ == '__main__':
     MAX_LECTURES_DAY = 4
 
     # max number of waiting spaces in a schedule
-    MAX_WAITING_SPACES = 1
+    MAX_WAITING_SPACES = 2
 
     # read the lectures of the groups
     group_lectures = read("data.json")

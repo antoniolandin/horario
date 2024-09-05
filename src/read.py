@@ -1,5 +1,5 @@
 import json
-from lecture import Lecture
+from src.lecture import Lecture
 
 
 def read(FILE_PATH: str) -> dict:
