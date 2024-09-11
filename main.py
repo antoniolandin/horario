@@ -111,13 +111,10 @@ def filter_schedule(lecture_map, max_lectures_day=3, max_spaces=1):
     return True
 
 
-if __name__ == '__main__':
-    # subjects that I want to study
-    my_subjects = [
-        "Fund. Des. Web", "Lab. Red. Sist. Op", "Pensa. Creativo",
-        "Proyectos 1", "Fund. Comp. Vis", "Prob. Estadist",
-        "Redes Ordenadores", "Proyectos 2"
-    ]
+def save_my_schedules(my_subjects,
+                      group_lectures,
+                      MAX_LECTURES_DAY=4,
+                      MAX_WAITING_SPACES=2):
 
     # max number of lectures per day
     MAX_LECTURES_DAY = 4
@@ -125,19 +122,16 @@ if __name__ == '__main__':
     # max number of waiting spaces in a schedule
     MAX_WAITING_SPACES = 2
 
-    # read the lectures of the groups
-    group_lectures = read("data.json")
-
     # divide the lectures into blocks by subject
-    subject_lecture_blocks = subject_lecture_blocks(my_subjects,
-                                                    group_lectures)
+    my_subject_lecture_blocks = subject_lecture_blocks(my_subjects,
+                                                       group_lectures)
 
     # check if all the subjects have been found
     assert len(my_subjects) == len(
-        subject_lecture_blocks), "Some subjects were not found."
+        my_subject_lecture_blocks), "Some subjects were not found."
 
     # generate the schedules
-    schedules = generate_schedules(subject_lecture_blocks)
+    schedules = generate_schedules(my_subject_lecture_blocks)
 
     # filter the schedules
     for schedule in schedules:
@@ -147,3 +141,28 @@ if __name__ == '__main__':
         if filter_schedule(schedule_map, MAX_LECTURES_DAY, MAX_WAITING_SPACES):
             # save the schedule in the out/ folder
             save_schedule_img(schedule)
+
+
+if __name__ == '__main__':
+    # subjects that I want to study
+    my_subjects = [
+        "Fund. Des. Web", "Lab. Red. Sist. Op", "Pensa. Creativo",
+        "Proyectos 1", "Fund. Comp. Vis", "Prob. Estadist",
+        "Redes Ordenadores", "Proyectos 2"
+    ]
+
+    # read the lectures of the groups
+    group_lectures = read("data.json")
+
+    # show all the schedules
+    # for group in group_lectures:
+    #     get_schedule_img(group_lectures[group]).show()
+
+    my_schedule = []
+    my_schedule.extend(group_lectures["INSO1B"])
+    my_schedule.extend(group_lectures["INSO2B"])
+    my_schedule = [lecture for lecture in my_schedule if lecture.subject in my_subjects]
+    save_schedule_img(my_schedule)
+
+    # save the schedules
+    # save_my_schedules(my_subjects, group_lectures)
