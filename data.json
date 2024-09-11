@@ -261,14 +261,14 @@
             "day": 0
         },
         {
-            "subject": "Prog. Ori. Objetos",
-            "teacher": "Fco. Javier Fernández",
+            "subject": "Sist. Operativos",
+            "teacher": "Carlos Vallez",
             "hour": 3,
             "day": 1
         },
         {
-            "subject": "Sist. Operativos",
-            "teacher": "Carlos Vallez",
+            "subject": "Prob. Estadist",
+            "teacher": "Carlos Mora",
             "hour": 4,
             "day": 1
         },
@@ -285,8 +285,8 @@
             "day": 2
         },
         {
-            "subject": "Prob. Estadist",
-            "teacher": "Carlos Mora",
+            "subject": "Prog. Ori. Objetos",
+            "teacher": "Fco. Javier Fernández",
             "hour": 3,
             "day": 3
         },
@@ -375,7 +375,7 @@
         {
             "subject": "Prob. Estadist",
             "teacher": "Carlos Gordón",
-            "hour": 5,
+            "hour": 3,
             "day": 1
         },
         {
